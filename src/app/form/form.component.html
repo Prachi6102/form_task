@@ -1,0 +1,231 @@
+<div class="d-flex justify-content-center align-items-center my-5 bg-body overflow-auto">
+    <form class="p-4 border rounded shadow-lg col-6" [formGroup]="myForm" (ngSubmit)="submitForm()">
+        <h3 class="text-center">Registration Form</h3>
+
+        <!-- first name -->
+        <div class="mb-3">
+            <label for="first-name" class="form-label">First Name<span *ngIf="myForm.get('fname')?.errors?.['required']"
+                    class="text-danger fw-bold">*</span> : </label>
+            <input type="text" name="fname" id="first-name" class="form-control" formControlName="fname" />
+            <small *ngIf="myForm.get('fname')?.touched && myForm.get('fname')?.errors?.['required']"
+                class="text-danger fw-bold">
+                *required
+            </small>
+        </div>
+
+        <!-- last name -->
+        <div class="mb-3">
+            <label for="last-name" class="form-label">Last Name<span *ngIf="myForm.get('lname')?.errors?.['required']"
+                    class="text-danger fw-bold">*</span> : </label>
+            <input type="text" name="lname" id="last-name" class="form-control" formControlName="lname" />
+            <small *ngIf="myForm.get('lname')?.touched && myForm.get('lname')?.errors?.['required']"
+                class="text-danger fw-bold">
+                *required
+            </small>
+        </div>
+
+        <!-- email -->
+        <div class="mb-3">
+            <label for="email" class="form-label">Email<span *ngIf="myForm.get('email')?.errors?.['required']"
+                    class="text-danger fw-bold">*</span> : </label>
+            <input type="email" name="email" id="email" class="form-control" formControlName="email" />
+            <small *ngIf="myForm.get('email')?.touched && myForm.get('email')?.errors?.['required']"
+                class="text-danger fw-bold">
+                *required
+            </small>
+            <small *ngIf="myForm.get('email')?.errors?.['pattern']" class="text-danger fw-bold">
+                not valid!!
+            </small>
+        </div>
+
+        <!-- password -->
+        <div class="mb-3">
+            <label for="password" class="form-label">Password<span *ngIf="myForm.get('password')?.errors?.['required']"
+                    class="text-danger fw-bold">*</span> : </label>
+            <input type="password" name="password" id="password" class="form-control" formControlName="password" />
+            <small *ngIf="myForm.get('password')?.touched && myForm.get('password')?.errors?.['required']"
+                class="text-danger fw-bold">
+                *required
+            </small>
+            <small *ngIf="myForm.get('password')?.errors?.['minlength']" class="text-danger fw-bold">
+                Password must be at least 8 characters long
+            </small>
+            <small *ngIf="myForm.get('password')?.errors?.['pattern']" class="text-danger fw-bold">
+                Password must contain at least one alphabet, one number, and one special character
+            </small>
+        </div>
+
+        <!-- confirm password -->
+        <div class="mb-3">
+            <label for="cPassword" class="form-label">Confirm Password<span
+                    *ngIf="myForm.get('cPassword')?.errors?.['required']" class="text-danger fw-bold">*</span> :
+            </label>
+            <input type="password" name="cPassword" id="cPassword" class="form-control" formControlName="cPassword" />
+            <small *ngIf="myForm.get('cPassword')?.touched && myForm.get('cPassword')?.errors?.['required']"
+                class="text-danger fw-bold">
+                *required
+            </small>
+            <small *ngIf="myForm.errors?.['passwordMismatch']" class="text-danger fw-bold">
+                Passwords do not match
+            </small>
+        </div>
+
+        <!-- mobile no -->
+        <div class="mb-3" formArrayName="mobile">
+            <div *ngFor="let mo of phoneNumbers.controls; let i = index" class="mb-3">
+                <label for="mobile" class="form-label">Mobile No {{i + 1}}<span
+                        *ngIf="phoneNumbers.controls[i].errors?.['required']" class="text-danger fw-bold">*</span> :
+                </label>
+                <div class="d-flex justify-content-between">
+                    <input type="text" name="mobile" id="mobile" class="form-control" [formControlName]="i" />
+                    <button *ngIf="i > 0" type="button" class="btn btn-sm btn-danger"
+                        (click)="removeMobileNo(i)">Remove</button>
+                </div>
+                <small *ngIf="phoneNumbers.controls[i].touched && phoneNumbers.controls[i].errors?.['required']"
+                    class="text-danger fw-bold">
+                    *required
+                </small>
+                <small *ngIf="phoneNumbers.controls[i].errors?.['pattern']" class="text-danger fw-bold">
+                    Please enter a valid 10-digit mobile number
+                </small>
+            </div>
+            <div>
+                <button class="btn btn-sm btn-primary" (click)="addMobileNo()">Add Mobile No.</button>
+            </div>
+        </div>
+
+        <!-- date of birth -->
+        <div class="mb-3">
+            <label for="dob" class="form-label">Date of birth<span *ngIf="myForm.get('dob')?.errors?.['required']"
+                    class="text-danger fw-bold">*</span> : </label>
+            <input type="date" name="dob" id="dob" class="form-control" formControlName="dob" />
+            <small *ngIf="myForm.get('dob')?.touched && myForm.get('dob')?.errors?.['required']"
+                class="text-danger fw-bold">
+                *required
+            </small>
+            <small *ngIf="myForm.get('dob')?.errors?.['underage']" class="text-danger fw-bold">
+                Age must be at least 18 years old
+            </small>
+        </div>
+
+        <!-- gender -->
+        <div class="mb-3 row">
+            <div class="form-label col-3">Gender<span *ngIf="myForm.get('gender')?.errors?.['required']"
+                    class="text-danger fw-bold">*</span> : </div>
+            <div class="col-9">
+                <div class="row">
+                    <div class="form-check col-4">
+                        <input type="radio" name="gender" id="genderMale" class="form-check-input"
+                            formControlName="gender" value="male">
+                        <label for="genderMale" class="form-check-label">Male</label>
+                    </div>
+                    <div class="form-check col-4">
+                        <input type="radio" name="gender" id="genderFemale" class="form-check-input"
+                            formControlName="gender" value="female">
+                        <label for="genderFemale" class="form-check-label">Female</label>
+                    </div>
+                    <div class="form-check col-4">
+                        <input type="radio" name="gender" id="genderOther" class="form-check-input"
+                            formControlName="gender" value="other">
+                        <label for="genderOther" class="form-check-label">Other</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- address -->
+        <label for="address" class="form-label">Address : </label>
+        <div formGroupName="address" class="border border-1 rounded-2 p-2 mb-3" id="address">
+            <!-- country -->
+            <div class="mb-3">
+                <label for="country" class="form-label">Country<span *ngIf="myForm.get('address.country')?.errors?.['required']"
+                        class="text-danger fw-bold">*</span> :</label>
+                <select id="country" class="form-select" formControlName="country">
+                    <option value="" selected>Select Country</option>
+                    <option *ngFor="let country of countries" value={{country}}>{{country}}</option>
+                </select>
+                <small
+                    *ngIf="myForm.get('address.country')?.touched && myForm.get('address.country')?.errors?.['required']"
+                    class="text-danger fw-bold">
+                    *required
+                </small>
+            </div>
+
+            <!-- state -->
+            <div class="mb-3">
+                <label for="state" class="form-label">State<span *ngIf="myForm.get('address.state')?.errors?.['required']"
+                        class="text-danger fw-bold">*</span> :</label>
+                <select id="state" class="form-select" formControlName="state">
+                    <option value="" selected>Select State</option>
+                    <option *ngFor="let state of updatedState" value={{state}}>{{state}}</option>
+                </select>
+                <small *ngIf="myForm.get('address.state')?.touched && myForm.get('address.state')?.errors?.['required']"
+                    class="text-danger fw-bold">
+                    *required
+                </small>
+            </div>
+
+            <!-- city -->
+            <div class="mb-3">
+                <label for="city" class="form-label">City<span *ngIf="myForm.get('address.city')?.errors?.['required']"
+                        class="text-danger fw-bold">*</span> :</label>
+                <select id="city" class="form-select" formControlName="city">
+                    <option value="" selected>Select City</option>
+                    <option *ngFor="let city of updatedCity" value={{city}}>{{city}}</option>
+                </select>
+                <small *ngIf="myForm.get('address.city')?.touched && myForm.get('address.city')?.errors?.['required']"
+                    class="text-danger fw-bold">
+                    *required
+                </small>
+            </div>
+
+            <!-- street -->
+            <div class="mb-3">
+                <label for="street" class="form-label">Street Address<span
+                        *ngIf="myForm.get('address.street')?.errors?.['required']" class="text-danger fw-bold">*</span> :
+                </label>
+                <textarea id="street" class="form-control" formControlName="street"></textarea>
+                <small
+                    *ngIf="myForm.get('address.street')?.touched && myForm.get('address.street')?.errors?.['required']"
+                    class="text-danger fw-bold">
+                    *required
+                </small>
+            </div>
+
+            <!-- postal -->
+            <div class="mb-3">
+                <label for="postal" class="form-label">Postal Code<span
+                        *ngIf="myForm.get('address.postal')?.errors?.['required']" class="text-danger fw-bold">*</span> :
+                </label>
+                <input type="text" id="postal" class="form-control" formControlName="postal" />
+                <small
+                    *ngIf="myForm.get('address.postal')?.touched && myForm.get('address.postal')?.errors?.['required']"
+                    class="text-danger fw-bold">
+                    *required
+                </small>
+            </div>
+        </div>
+
+        <!-- agree to terms & conditions -->
+        <div class="form-check mb-3">
+            <input type="checkbox" class="form-check-input" id="agree-to-terms" formControlName="agreeToTerms">
+            <label class="form-check-label" for="agree-to-terms">Agree to terms<span
+                    *ngIf="myForm.get('agreeToTerms')?.errors?.['required']"
+                    class="text-danger fw-bold">*</span></label>
+        </div>
+
+        <div *ngIf="myForm.invalid" class="text-center mb-3">
+            <small class="text-secondary">
+                <span class="text-danger fw-bold">*</span> indicates required fields.
+            </small>
+        </div>
+
+        <!-- submit button -->
+        <div class="mb-3 d-flex justify-content-center">
+            <button type="submit" class="btn btn-primary" [disabled]="!myForm.valid">Submit</button>
+        </div>
+        <!-- <div class="mb-3 d-flex justify-content-center">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div> -->
+    </form>
+</div>
