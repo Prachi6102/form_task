@@ -26,11 +26,7 @@ export class GridComponent {
   constructor() {}
 
   ngOnInit() {
-    console.log('in grid');
-    // Retrieve form data array from local storage
-    const formDataArray = JSON.parse(localStorage.getItem('formDataArray'));
-    if (formDataArray) {
-      this.rowData = formDataArray;
-    }
+    const storedData = localStorage.getItem('formDataArray');
+    this.rowData = storedData ? JSON.parse(storedData) : [];
   }
 }

@@ -160,12 +160,15 @@ export class FormComponent {
 
   submitForm() {
     if (this.myForm.valid) {
-      const formData = this.myForm.value;
-      console.log(formData);
-      // Push form data to formDataArray
-      this.formDataArray.push(this.myForm.value);
-      // Store formDataArray in local storage
-      localStorage.setItem('formDataArray', JSON.stringify(this.formDataArray));
+      // Retrieve formDataArray from local storage
+      const storedData = localStorage.getItem('formDataArray');
+      const formDataArray = storedData ? JSON.parse(storedData) : [];
+
+      // Push new form data to formDataArray
+      formDataArray.push(this.myForm.value);
+
+      // Store updated formDataArray in local storage
+      localStorage.setItem('formDataArray', JSON.stringify(formDataArray));
       this.myForm.reset(); // Optionally reset form after submission
     }
     // console.log(this.myForm);
