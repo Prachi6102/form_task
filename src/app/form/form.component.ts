@@ -18,31 +18,52 @@ export class FormComponent {
   myForm!: FormGroup;
   addressData: AddressData = {
     India: {
-      Gujarat: ['Ahmedabad', 'Surat', 'Vadodara'],
+      Gujarat: ['Jamnagar', 'Ahmedabad', 'Surat', 'Vadodara'],
       Maharashtra: ['Mumbai', 'Pune', 'Nagpur'],
       Rajasthan: ['Jaipur', 'Udaipur', 'Jodhpur'],
       Delhi: ['New Delhi', 'Dwarka', 'Rohini'],
+      Karnataka: ['Bangalore', 'Mysore', 'Mangalore'],
     },
     USA: {
       'New York': ['New York City', 'Buffalo', 'Albany'],
       California: ['Los Angeles', 'San Francisco', 'San Diego'],
       Texas: ['Houston', 'Austin', 'Dallas'],
+      Florida: ['Miami', 'Orlando', 'Tampa'],
+      Illinois: ['Chicago', 'Springfield', 'Naperville'],
     },
     Canada: {
       Ontario: ['Toronto', 'Ottawa', 'Mississauga'],
       Quebec: ['Montreal', 'Quebec City', 'Laval'],
       Alberta: ['Calgary', 'Edmonton', 'Red Deer'],
+      'British Columbia': ['Vancouver', 'Victoria', 'Richmond'],
+      Manitoba: ['Winnipeg', 'Brandon', 'Steinbach'],
     },
     Australia: {
       'New South Wales': ['Sydney', 'Newcastle', 'Wollongong'],
       Queensland: ['Brisbane', 'Gold Coast', 'Cairns'],
       Victoria: ['Melbourne', 'Geelong', 'Ballarat'],
+      Tasmania: ['Hobart', 'Launceston', 'Devonport'],
+      'Western Australia': ['Perth', 'Fremantle', 'Bunbury'],
     },
     'United Kingdom': {
       England: ['London', 'Manchester', 'Birmingham'],
       Scotland: ['Edinburgh', 'Glasgow', 'Aberdeen'],
       Wales: ['Cardiff', 'Swansea', 'Newport'],
       'Northern Ireland': ['Belfast', 'Derry', 'Lisburn'],
+    },
+    Germany: {
+      Bavaria: ['Munich', 'Nuremberg', 'Augsburg'],
+      'North Rhine-Westphalia': ['Cologne', 'Düsseldorf', 'Dortmund'],
+      Berlin: ['Berlin'],
+      Hamburg: ['Hamburg'],
+      Saxony: ['Dresden', 'Leipzig', 'Chemnitz'],
+    },
+    France: {
+      'Île-de-France': ['Paris', 'Boulogne-Billancourt', 'Versailles'],
+      Provence: ['Marseille', 'Nice', 'Toulon'],
+      Occitanie: ['Toulouse', 'Montpellier', 'Perpignan'],
+      'Nouvelle-Aquitaine': ['Bordeaux', 'Limoges', 'Poitiers'],
+      Brittany: ['Rennes', 'Brest', 'Quimper'],
     },
   };
 
@@ -115,14 +136,25 @@ export class FormComponent {
     );
   }
 
-  get updatedCountry() {
-    const selectedCountry = this.myForm.get('country')?.value;
+  get updatedState() {
+    const selectedCountry = this.myForm.get('address.country')?.value;
     if (selectedCountry) {
       this.states = Object.keys(this.addressData[selectedCountry] || {});
     } else {
       this.states = [];
     }
     return this.states;
+  }
+
+  get updatedCity() {
+    const selectedCountry = this.myForm.get('address.country')?.value;
+    const selectedState = this.myForm.get('address.state')?.value;
+    if (selectedState) {
+      this.cities = this.addressData[selectedCountry][selectedState];
+    } else {
+      this.cities = [];
+    }
+    return this.cities;
   }
 
   submitForm() {

@@ -1,10 +1,11 @@
 <div class="d-flex justify-content-center align-items-center my-5 bg-body overflow-auto">
-    <form class="p-4 border rounded shadow-lg col-4" [formGroup]="myForm" (ngSubmit)="submitForm()">
+    <form class="p-4 border rounded shadow-lg col-6" [formGroup]="myForm" (ngSubmit)="submitForm()">
         <h3 class="text-center">Registration Form</h3>
 
         <!-- first name -->
         <div class="mb-3">
-            <label for="first-name" class="form-label">First Name<span class="text-danger fw-bold">*</span> : </label>
+            <label for="first-name" class="form-label">First Name<span *ngIf="myForm.get('fname')?.errors?.['required']"
+                    class="text-danger fw-bold">*</span> : </label>
             <input type="text" name="fname" id="first-name" class="form-control" formControlName="fname" />
             <small *ngIf="myForm.get('fname')?.touched && myForm.get('fname')?.errors?.['required']"
                 class="text-danger fw-bold">
@@ -14,7 +15,8 @@
 
         <!-- last name -->
         <div class="mb-3">
-            <label for="last-name" class="form-label">Last Name<span class="text-danger fw-bold">*</span> : </label>
+            <label for="last-name" class="form-label">Last Name<span *ngIf="myForm.get('lname')?.errors?.['required']"
+                    class="text-danger fw-bold">*</span> : </label>
             <input type="text" name="lname" id="last-name" class="form-control" formControlName="lname" />
             <small *ngIf="myForm.get('lname')?.touched && myForm.get('lname')?.errors?.['required']"
                 class="text-danger fw-bold">
@@ -24,7 +26,8 @@
 
         <!-- email -->
         <div class="mb-3">
-            <label for="email" class="form-label">Email<span class="text-danger fw-bold">*</span> : </label>
+            <label for="email" class="form-label">Email<span *ngIf="myForm.get('email')?.errors?.['required']"
+                    class="text-danger fw-bold">*</span> : </label>
             <input type="email" name="email" id="email" class="form-control" formControlName="email" />
             <small *ngIf="myForm.get('email')?.touched && myForm.get('email')?.errors?.['required']"
                 class="text-danger fw-bold">
@@ -37,7 +40,8 @@
 
         <!-- password -->
         <div class="mb-3">
-            <label for="password" class="form-label">Password<span class="text-danger fw-bold">*</span> : </label>
+            <label for="password" class="form-label">Password<span *ngIf="myForm.get('password')?.errors?.['required']"
+                    class="text-danger fw-bold">*</span> : </label>
             <input type="password" name="password" id="password" class="form-control" formControlName="password" />
             <small *ngIf="myForm.get('password')?.touched && myForm.get('password')?.errors?.['required']"
                 class="text-danger fw-bold">
@@ -53,7 +57,8 @@
 
         <!-- confirm password -->
         <div class="mb-3">
-            <label for="cPassword" class="form-label">Confirm Password<span class="text-danger fw-bold">*</span> :
+            <label for="cPassword" class="form-label">Confirm Password<span
+                    *ngIf="myForm.get('cPassword')?.errors?.['required']" class="text-danger fw-bold">*</span> :
             </label>
             <input type="password" name="cPassword" id="cPassword" class="form-control" formControlName="cPassword" />
             <small *ngIf="myForm.get('cPassword')?.touched && myForm.get('cPassword')?.errors?.['required']"
@@ -68,7 +73,8 @@
         <!-- mobile no -->
         <div class="mb-3" formArrayName="mobile">
             <div *ngFor="let mo of phoneNumbers.controls; let i = index" class="mb-3">
-                <label for="mobile" class="form-label">Mobile No {{i + 1}}<span class="text-danger fw-bold">*</span> :
+                <label for="mobile" class="form-label">Mobile No {{i + 1}}<span
+                        *ngIf="phoneNumbers.controls[i].errors?.['required']" class="text-danger fw-bold">*</span> :
                 </label>
                 <div class="d-flex justify-content-between">
                     <input type="text" name="mobile" id="mobile" class="form-control" [formControlName]="i" />
@@ -90,7 +96,8 @@
 
         <!-- date of birth -->
         <div class="mb-3">
-            <label for="dob" class="form-label">Date of birth<span class="text-danger fw-bold">*</span> : </label>
+            <label for="dob" class="form-label">Date of birth<span *ngIf="myForm.get('dob')?.errors?.['required']"
+                    class="text-danger fw-bold">*</span> : </label>
             <input type="date" name="dob" id="dob" class="form-control" formControlName="dob" />
             <small *ngIf="myForm.get('dob')?.touched && myForm.get('dob')?.errors?.['required']"
                 class="text-danger fw-bold">
@@ -103,7 +110,8 @@
 
         <!-- gender -->
         <div class="mb-3 row">
-            <div class="form-label col-3">Gender<span class="text-danger fw-bold">*</span> : </div>
+            <div class="form-label col-3">Gender<span *ngIf="myForm.get('gender')?.errors?.['required']"
+                    class="text-danger fw-bold">*</span> : </div>
             <div class="col-9">
                 <div class="row">
                     <div class="form-check col-4">
@@ -130,7 +138,8 @@
         <div formGroupName="address" class="border border-1 rounded-2 p-2 mb-3" id="address">
             <!-- country -->
             <div class="mb-3">
-                <label for="country" class="form-label">Country<span class="text-danger fw-bold">*</span> :</label>
+                <label for="country" class="form-label">Country<span *ngIf="myForm.get('address.country')?.errors?.['required']"
+                        class="text-danger fw-bold">*</span> :</label>
                 <select id="country" class="form-select" formControlName="country">
                     <option value="" selected>Select Country</option>
                     <option *ngFor="let country of countries" value={{country}}>{{country}}</option>
@@ -144,10 +153,11 @@
 
             <!-- state -->
             <div class="mb-3">
-                <label for="state" class="form-label">State<span class="text-danger fw-bold">*</span> :</label>
+                <label for="state" class="form-label">State<span *ngIf="myForm.get('address.state')?.errors?.['required']"
+                        class="text-danger fw-bold">*</span> :</label>
                 <select id="state" class="form-select" formControlName="state">
                     <option value="" selected>Select State</option>
-                    <option *ngFor="let state of states" value={{state}}>{{state}}</option>
+                    <option *ngFor="let state of updatedState" value={{state}}>{{state}}</option>
                 </select>
                 <small *ngIf="myForm.get('address.state')?.touched && myForm.get('address.state')?.errors?.['required']"
                     class="text-danger fw-bold">
@@ -157,10 +167,11 @@
 
             <!-- city -->
             <div class="mb-3">
-                <label for="city" class="form-label">City<span class="text-danger fw-bold">*</span> :</label>
+                <label for="city" class="form-label">City<span *ngIf="myForm.get('address.city')?.errors?.['required']"
+                        class="text-danger fw-bold">*</span> :</label>
                 <select id="city" class="form-select" formControlName="city">
                     <option value="" selected>Select City</option>
-                    <option *ngFor="let city of cities" value={{city}}>{{city}}</option>
+                    <option *ngFor="let city of updatedCity" value={{city}}>{{city}}</option>
                 </select>
                 <small *ngIf="myForm.get('address.city')?.touched && myForm.get('address.city')?.errors?.['required']"
                     class="text-danger fw-bold">
@@ -170,7 +181,8 @@
 
             <!-- street -->
             <div class="mb-3">
-                <label for="street" class="form-label">Street Address<span class="text-danger fw-bold">*</span> :
+                <label for="street" class="form-label">Street Address<span
+                        *ngIf="myForm.get('address.street')?.errors?.['required']" class="text-danger fw-bold">*</span> :
                 </label>
                 <textarea id="street" class="form-control" formControlName="street"></textarea>
                 <small
@@ -182,7 +194,9 @@
 
             <!-- postal -->
             <div class="mb-3">
-                <label for="postal" class="form-label">Postal Code<span class="text-danger fw-bold">*</span> : </label>
+                <label for="postal" class="form-label">Postal Code<span
+                        *ngIf="myForm.get('address.postal')?.errors?.['required']" class="text-danger fw-bold">*</span> :
+                </label>
                 <input type="text" id="postal" class="form-control" formControlName="postal" />
                 <small
                     *ngIf="myForm.get('address.postal')?.touched && myForm.get('address.postal')?.errors?.['required']"
@@ -195,12 +209,12 @@
         <!-- agree to terms & conditions -->
         <div class="form-check mb-3">
             <input type="checkbox" class="form-check-input" id="agree-to-terms" formControlName="agreeToTerms">
-            <label class="form-check-label" for="agree-to-terms">Agree to terms<span class="text-secondary"><small>(you
-                        must agree
-                        to the terms and conditions)</small></span></label>
+            <label class="form-check-label" for="agree-to-terms">Agree to terms<span
+                    *ngIf="myForm.get('agreeToTerms')?.errors?.['required']"
+                    class="text-danger fw-bold">*</span></label>
         </div>
 
-        <div class="text-center mb-3">
+        <div *ngIf="myForm.invalid" class="text-center mb-3">
             <small class="text-secondary">
                 <span class="text-danger fw-bold">*</span> indicates required fields.
             </small>
@@ -210,56 +224,8 @@
         <div class="mb-3 d-flex justify-content-center">
             <button type="submit" class="btn btn-primary" [disabled]="!myForm.valid">Submit</button>
         </div>
+        <!-- <div class="mb-3 d-flex justify-content-center">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div> -->
     </form>
 </div>
-
-<!-- <div class="mb-3 d-flex flex-row gap-2">
-    <div class="col-6 d-flex flex-column">
-        <label for="state" class="form-label">State</label>
-        <select name="state" id="state" class="form-select" formControlName="state"
-            [ngClass]="{'is-invalid':state?.invalid &&(state?.dirty||state?.touched)}">
-
-            <option value="" selected>Select</option>
-            <option *ngFor="let state of states" value={{state}}>{{state}}</option>
-        </select>
-        <div *ngIf="state?.invalid &&(state?.dirty||state?.touched)" class="alertText alert alert-danger">
-            <div *ngIf="state?.errors?.['required']">
-                Select the state
-            </div>
-        </div>
-    </div>
-    <div class="col-6 d-flex flex-column">
-        <label for="city" class="form-label">City</label>
-        <select name="city" id="city" class="form-select" formControlName="city"
-            [ngClass]="{'is-invalid':city?.invalid&&(city?.dirty||city?.touched)}">
-            <option value="" selected>Select</option>
-            <option *ngFor="let city of updatedcity" [value]="city">{{ city }}</option>
-        </select>
-        <div *ngIf="city?.invalid&&(city?.dirty||city?.touched)" class="alertText alert alert-danger">
-            <div *ngIf="city?.errors?.['required']">
-                Select the city
-            </div>
-        </div>
-    </div>
-</div> -->
-
-<!-- statesAndCities: {
-[state: string]: string[];
-} = {
-'Gujarat': ['Ahmedabad', 'Surat', 'Vadodara'],
-'Maharashtra': ['Mumbai', 'Pune', 'Nagpur'],
-'Rajasthan': ['Jaipur', 'Udaipur', 'Jodhpur'],
-'Delhi': ['New Delhi', 'Dwarka', 'Rohini']
-};
-states = Object.keys(this.statesAndCities);
-cities: string[] = []
-
-get updatedcity() {
-const selectedState = this.profileForm.get('state')?.value;
-if (selectedState) {
-this.cities = this.statesAndCities[selectedState] || [];
-} else {
-this.cities = [];
-}
-return this.cities
-} -->
